@@ -8,7 +8,7 @@ const app = new Hono();
 
 app.get("/:src", async (c) => {
   const { src } = c.req.param();
-  const width = c.req.query("w");
+  const width = c.req.query("width");
   const quality = c.req.query("q");
   const thumbnail = c.req.query("thumbnail");
 
@@ -25,7 +25,7 @@ app.get("/:src", async (c) => {
   const originalImage = fs.readFileSync(imagePath);
 
   const resizedImageBuffer = await sharp(originalImage)
-    .webp({ quality: quality ? Number(quality) : 75 })
+    .png({ quality: quality ? Number(quality) : 75 })
     .resize(Number(width))
     .toBuffer();
 
